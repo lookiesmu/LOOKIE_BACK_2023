@@ -1,5 +1,6 @@
 package com.example.shop.domain;
 
+import com.example.shop.domain.item.Item;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

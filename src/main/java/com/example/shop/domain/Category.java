@@ -1,5 +1,6 @@
 package com.example.shop.domain;
 
+import com.example.shop.domain.item.Item;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,7 @@ public class Category {//카테고리
     @JoinColumn(name = "parent_id")
     private Category parent;
 
-    @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
     private List<Category> child = new ArrayList<>();
 
     public void addChildCategory(Category child){

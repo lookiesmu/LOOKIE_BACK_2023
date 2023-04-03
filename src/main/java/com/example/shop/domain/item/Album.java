@@ -1,4 +1,4 @@
-package com.example.shop.domain;
+package com.example.shop.domain.item;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Entity
 @DiscriminatorValue("A")
 @Getter @Setter
-public class Album extends Item{//엘범
+public class Album extends Item {//엘범
     private String artist;
     private String etc;
 }
