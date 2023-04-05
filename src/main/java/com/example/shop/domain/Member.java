@@ -17,7 +17,9 @@ public class Member {
     @Column(name = "member_id")//칼럼 이름 설정
     private Long Id;
 
+    @Column(unique = true) // unique 재약 조건을 걸었음
     private String username;
+
     @Embedded//객체 내장 맵핑을 가능하게하는 에노테이션
     private Address address;
 
