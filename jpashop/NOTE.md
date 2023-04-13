@@ -72,4 +72,4 @@ Member Entity를 만들고, Repository를 통해 연산한다.
   - 논리명 : 테이블 이름을 적지 않았을 때의 네이밍 룰
   - 물리명 : 이름이 적혀있을 때를 포함한 모든 네이밍 룰
 
-
+테스트 시 test/resources/application.yml에서 디비를 메모리 모드로 변경할 수 있음

@@ -18,6 +18,8 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
+    private String title;
+
     //ManyToOne은 디폴트가 EAGER이므로 지연 로딩으로 설정
     @ManyToOne(fetch=FetchType.LAZY)  //멤버 : 주문 = 1 : N,
     @JoinColumn(name = "member_id")
@@ -41,6 +43,20 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status; //주문상태 ENUM
+
+
+    protected Order(){
+
+
+    }
+
+    //초기에 생성할 때만 값을 설정할 수 있게 하도록 생성자 생성
+    public Order(String title, LocalDateTime orderDate, OrderStatus status){
+        this.title = title;
+        this.orderDate = orderDate;
+        this.status = status;
+
+    }
 
     // == 연관관계 메서드 ==
     public void setMamber(Member member){

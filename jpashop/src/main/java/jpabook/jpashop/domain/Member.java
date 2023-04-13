@@ -21,4 +21,7 @@ public class Member {
     @OneToMany(mappedBy = "member") //Order에서 member에 의해서 매핑된 미러일 뿐임을 명시(연관관계의 주체가 아님)
     private List<Order> orders = new ArrayList<>();
 
+
+
+
 }
