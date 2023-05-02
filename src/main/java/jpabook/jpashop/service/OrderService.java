@@ -40,7 +40,7 @@ public class OrderService {
         OrderItem orderItem = OrderItem.createOrderItem(item, item.getPrice(), count);
 
         //주문 생성
-        Order order = Order.createOrder(member, delivery, orderItem, orderItem);
+        Order order = Order.createOrder(member, delivery, orderItem);
 
         //주문 저장
         orderRepository.save(order);
