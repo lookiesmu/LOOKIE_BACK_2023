@@ -1,6 +1,8 @@
 package jpabook.jpashop.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders") //테이블 이름 변경
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
 @Getter @Setter
 public class Order {
     @Id
@@ -45,12 +48,10 @@ public class Order {
     private OrderStatus status; //주문상태 ENUM
 
 
-    protected Order(){
-
-
-    }
-
-    //초기에 생성할 때만 값을 설정할 수 있게 하도록 생성자 생성
+//    //초기에 생성할 때만 값을 설정할 수 있게 하도록 생성자 생성
+//    public Order(){
+//
+//    }
     public Order(String title, LocalDateTime orderDate, OrderStatus status){
         this.title = title;
         this.orderDate = orderDate;
@@ -74,4 +75,56 @@ public class Order {
         this.delivery = delivery;
         delivery.setOrder(this);
     }
+
+
+    /* 도메인 모델 패턴!! 엔티티가 비즈니스 로직을 가지고 객체 지향의 특성을 적극 활용하는 것
+    * <-> 트랜잭션 스크립트 패턴 : 서비스에서 대부분의 비즈니스 로직을 처리하는 것
+    * */
+    // 생성 로직
+
+    /**
+     * 주문 생성 로직
+     */
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems){
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for(OrderItem orderItem: orderItems){
+            order.addOrderItem(orderItem);
+        }
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+    }
+
+    // 비즈니스 로직
+    /**
+     * 주문 취소
+     */
+    public void cancel(){
+        if(delivery.getStatus() == DeliveryStatus.COMP){
+            throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능");
+        }
+        this.setStatus(OrderStatus.CANCEL);
+        for(OrderItem orderItem: orderItems){
+            orderItem.cancel();
+        }
+    }
+
+    // 조회 로직
+    /**
+     * 전체 주문 가격 조회
+     */
+    public int getTotalPrice(){
+        int totalPrice = 0;
+        for(OrderItem orderItem: orderItems){
+            totalPrice += orderItem.getTotalPrice();
+        }
+        return totalPrice;
+
+//        return orderItems.stream()
+//                .mapToInt(OrderItem::getTotalPrice)
+//                .sum();
+    }
+
 }

@@ -48,3 +48,24 @@ public class MemberRepository {
                 .getResultList();
     }
 }
+
+
+
+
+//@Repository
+//@RequiredArgsConstructor
+//public class MemberRepository {
+//
+//    //Spring이 Injection
+////    @PersistenceContext
+//    private final EntityManager em;
+//
+////생성자 Injection을 사용하면 @PersistenceContext -> @Autowired로 대체 가능
+////-> @RequiredArgsConstructor로 생성자 Injection 자동완성가능
+////    public MemberRepository(EntityManager em){
+////        this.em = em;
+////    }
+//
+//// 팩토리 주입 시(별로 안쓰임 팩토리는)
+//// @PersistenceUnit
+////private EntityFactory emf
