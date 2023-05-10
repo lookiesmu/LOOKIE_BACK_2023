@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 public class HomeController {
 
+    // Logger log = LoggerFactory.getLogger(getClass());
     @RequestMapping("/")
     public String home(){
         log.info("home controller");

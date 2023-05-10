@@ -1,5 +1,7 @@
 package jpabook.jpashop.repository;
 
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
@@ -28,7 +30,7 @@ public class OrderRepository {
     }
 
     public List<Order> findAllByString(OrderSearch orderSearch) {
-        //language=JPAQL
+        //language=JPQL
         String jpql = "select o From Order o join o.member m";
         boolean isFirstCondition = true;
 //주문 상태 검색
@@ -87,5 +89,14 @@ public class OrderRepository {
         TypedQuery<Order> query = em.createQuery(cq).setMaxResults(1000); //최대 1000건
         return query.getResultList();
     }
+
+    /**
+     * QueryDsl
+     */
+//    public List<Order> findAllByQueryDsl(OrderSearch orderSearch){
+//        JPAQuery<Void> query = new JPAQuery<>(em);
+//
+//    }
+
 
 }
