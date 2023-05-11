@@ -2,9 +2,11 @@ package jpabook.jpashop.repository;
 
 import jpabook.jpashop.domain.item.Item;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import java.util.List;
 
 @Repository
@@ -19,13 +21,21 @@ public class ItemRepository {
         }
         //DB에 등록된 값을 가져온 것
         else{
-            em.merge(item); //Update와 비슷
+            em.merge(item); //Update와 비슷한 Merge. 준영속 컨텍스트를 영속성 컨텍스트 객체로 변환하여 반환해준다.
+            // (파라미터인 item이 변환되는 것은 아니고 새로운 영속성 객체가 반환됨)
+
         }
     }
 
     public Item findOne(Long id){
         return em.find(Item.class, id);
     }
+
+    public Item findOne(Long id, LockModeType lock){
+
+        return em.find(Item.class, id, lock);
+    }
+
 
     public List<Item> findAll(){
         return em.createQuery("select i from Item i", Item.class).getResultList();

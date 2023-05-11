@@ -9,13 +9,20 @@ import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
 import jpabook.jpashop.repository.MemberRepository;
 import jpabook.jpashop.repository.OrderRepository;
+import jpabook.jpashop.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.LockModeType;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j  //Logger
 public class OrderService {
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
@@ -24,11 +31,13 @@ public class OrderService {
     /**
      * 주문
      */
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public Long order(Long id, Long itemId, int count){
         //엔티티 조회
+
         Member member = memberRepository.findOne(id);
-        Item item = itemRepository.findOne(itemId);
+
+        Item item = itemRepository.findOne(itemId, LockModeType.PESSIMISTIC_WRITE);
 
         //배송정보 생성
         Delivery delivery = new Delivery();
@@ -63,7 +72,7 @@ public class OrderService {
     /**
      * 주문 검색
      */
-//    public List<Order> findOrders(OrderSearch orderSearch){
-//        return orderRepository.findAll(orderSearch);
-//    }
+    public List<Order> findOrders(OrderSearch orderSearch){
+        return orderRepository.findAllByString(orderSearch);
+    }
 }
