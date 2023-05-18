@@ -32,7 +32,6 @@ public class ItemRepository {
     }
 
     public Item findOne(Long id, LockModeType lock){
-
         return em.find(Item.class, id, lock);
     }
 

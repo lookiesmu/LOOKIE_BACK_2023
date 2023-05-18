@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jpabook.jpashop.domain.item.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class OrderItem {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "order_id")
+    @JsonIgnore //JSON(Response)에 포함이 되지 않도록 함
     private Order order;
     private int orderPrice; //주문 당시 가격
     private int count; //주문 당시 수량
