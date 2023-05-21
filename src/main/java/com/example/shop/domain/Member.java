@@ -1,6 +1,7 @@
 package com.example.shop.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class Member {
     private Long Id;
 
     @Column(unique = true) // unique 재약 조건을 걸었음
+    @NotEmpty(message = "there should be a username")
     private String username;
 
     @Embedded//객체 내장 맵핑을 가능하게하는 에노테이션
