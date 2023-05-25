@@ -36,6 +36,7 @@ public class InitDB {
 
             Book book2 = createBook("JPA2 BOOK", 20000, 200);
             em.persist(book2);
+
             OrderItem orderItem = OrderItem.createOrderItem(book1, 10000, 1);
             OrderItem orderItem1 = OrderItem.createOrderItem(book2, 20000, 2);
             Delivery delivery = new Delivery();
@@ -46,17 +47,17 @@ public class InitDB {
 
         }
 
-        private Member createMember(String userA, String seoul, String zipcode, String street) {
+        private Member createMember(String username, String seoul, String zipcode, String street) {
             Member member = new Member();
-            member.setUsername(userA);
+            member.setUsername(username);
             member.setAddress(new Address(seoul, zipcode, street));
             return member;
 
         }
 
-        private Book createBook(String JPA1_BOOK, int price, int stockQuantity) {
+        private Book createBook(String bookName, int price, int stockQuantity) {
             Book book1 = new Book();
-            book1.setName(JPA1_BOOK);
+            book1.setName(bookName);
             book1.setPrice(price);
             book1.setStockQuantity(stockQuantity);
             return book1;
